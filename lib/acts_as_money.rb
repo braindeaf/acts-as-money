@@ -161,8 +161,7 @@ module ActsAsMoney
         
         define_method "#{field}=".to_sym do |val|
           currency = options[:currency].is_a?(Symbol) ? send(options[:currency]) : options[:currency]
-          
-          val = Money.new(val, currency) unless val.is_a? Money
+          val = Money.new(val.to_f * 100, currency) unless val.is_a? Money
           write_attribute(options[:amount], val.amount)
           write_attribute(options[:currency], val.currency)
           return val
